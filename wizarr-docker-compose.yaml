@@ -1,0 +1,33 @@
+services:
+  wizarr:
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4096M
+    environment:
+      - PUID=3000 # Change to the correct user
+      - PGID=3000 # Change to the correct group
+      - DISABLE_BUILTIN_AUTH=false
+      - TZ=ETC/UTC # Change if needed
+    healthcheck:
+      interval: 30s
+      retries: 5
+      start_interval: 2s
+      start_period: 15s
+      test: wget --quiet --spider http://127.0.0.1:35690/
+      timeout: 5s
+    image: ghcr.io/wizarrrr/wizarr
+    ports:
+      - '35690:5690'
+    restart: unless-stopped
+    volumes:
+      - path/wizarr/database:/data/database # Change to the correct directory
+      - path/wizarr/wizard:/data/wizard_steps # Change to the correct directory
+
+x-portals:
+  - host: 0.0.0.0
+    name: HTTPS Access
+    path: /
+    port: 35690
+    scheme: https
