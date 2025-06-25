@@ -25,9 +25,25 @@ services:
       - path/wizarr/database:/data/database # Change to the correct directory
       - path/wizarr/wizard:/data/wizard_steps # Change to the correct directory
 
+
 x-portals:
   - host: 0.0.0.0
     name: HTTPS Access
     path: /
     port: 35690
     scheme: https
+
+
+x-notes: >+
+  # Wizarr
+
+  ## What is wizarr
+  Wizarr is designed to simplify the management of media servers such as Jellyfin, Plex, and Emby.
+  Initially created to allow users to easily invite others to their media servers, it's ultimate goal is to become
+  a versatile, centralized server management tool that can seamlessly interact with various APIs
+
+  ## How to support the project
+
+  ## Bug Reports and Feature Requests
+  Open an issue on GitHub: https://github.com/wizarrrrr/wizarr/issues/new/choose
+
