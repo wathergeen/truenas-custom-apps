@@ -1,0 +1,14 @@
+services:
+  vs-server:
+    container_name: vintagestory_server
+    environment:
+      SERVER_PASSWORD: kalangu
+    image: pepecitron/vintagestory-server
+    ports:
+      - '42420:42420'
+    restart: unless-stopped
+    stdin_open: True
+    tty: True
+    volumes:
+      - ./vintage_story/server:/home/vintagestory/server
+      - ./vintage_story/data:/var/vintagestory/data
