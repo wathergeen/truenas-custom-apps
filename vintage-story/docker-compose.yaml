@@ -1,14 +1,11 @@
 services:
-  vs-server:
+  vintagestory-server-stable:
     container_name: vintagestory_server
     environment:
-      SERVER_PASSWORD: kalangu
-    image: pepecitron/vintagestory-server
+      SERVER_PASSWORD: passsword #Change this to a secure password
+    image: devidian/vintagestory:latest
     ports:
       - '42420:42420'
     restart: unless-stopped
-    stdin_open: True
-    tty: True
     volumes:
-      - ./vintage_story/server:/home/vintagestory/server
-      - ./vintage_story/data:/var/vintagestory/data
+      - /path/to/save:/gamedata
