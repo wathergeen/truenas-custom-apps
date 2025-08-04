@@ -1,0 +1,25 @@
+services:
+  wikijs-db:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    volumes:
+      - /path/to/save:/var/lib/postgresql/data:rw
+    environment:
+      POSTGRES_DB: wiki
+      POSTGRES_USER: wikijs
+      POSTGRES_PASSWORD: password #Change this to a secure password
+
+  wikijs:
+    image: ghcr.io/requarks/wiki:2
+    environment:
+      DB_TYPE: postgres
+      DB_HOST: wikijs-db
+      DB_PORT: 5432
+      DB_USER: wikijs
+      DB_PASS: password #Change this to a secure password
+      DB_NAME: wiki
+    restart: unless-stopped
+    ports:
+      - "33080:3000"
+    depends_on:
+      - wikijs-db
