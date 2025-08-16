@@ -1,11 +1,49 @@
 services:
   evolution-api:
-    container_name: evolution_api
-    environment:
-      - AUTHENTICATION_API_KEY=example_api_key
-    image: atendai/evolution-api:v2.1.1
-    ports:
-      - '30339:8080'
+    container_name: evolution-api
+    hostname: evolution-api
+    image: evoapicloud/evolution-api:latest
     restart: unless-stopped
+    depends_on:
+      - evolution-redis
+      - evolution-postgres
+    ports:
+      - 38080:8080
     volumes:
-      - /path/to/change/evolution-api:/evolution/instances
+      -  ./evolution_instances:/evolution/instances
+    networks:
+      - evolution-net
+    env_file:
+      - .env
+
+  evolution-redis:
+    container_name: evolution-redis
+    hostname: evolution-redis
+    image: redis:latest
+    restart: unless-stopped
+    networks:
+      - evolution-net
+    volumes:
+      -  ./evolution-api/redis:/data
+    ports:
+      - 38079:6379
+
+  evolution-postgres:
+    container_name: evolution-postgres
+    hostname: evolution-postgres
+    image: postgres:15
+    networks:
+      - evolution-net
+    restart: unless-stopped
+    ports:
+      - 38032:5432
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+    - ./database:/var/lib/postgresql/data
+
+networks:
+  evolution-net:
+    driver: bridge
