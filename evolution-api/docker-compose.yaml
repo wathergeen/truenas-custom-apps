@@ -1,11 +1,11 @@
 services:
   evolution-api:
     container_name: evolution_api
-    image: atendai/evolution-api:v2.1.1
-    restart: unless-stopped
-    ports:
-      - "30338:8080"
-    env_file:
+    environment:
       - AUTHENTICATION_API_KEY=example_api_key
+    image: atendai/evolution-api:v2.1.1
+    ports:
+      - '30339:8080'
+    restart: unless-stopped
     volumes:
       - /path/to/change/evolution-api:/evolution/instances
