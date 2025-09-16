@@ -1,0 +1,16 @@
+services:
+  crafty:
+    container_name: crafty_container
+    image: registry.gitlab.com/crafty-controller/crafty-4:latest
+    restart: unless-stopped
+    environment:
+        - TZ=America/Araguaina
+    ports:
+        - "8443:8443" # HTTPS
+        - "25565-25590:25565-25590" # MC SERV PORT RANGE
+    volumes:
+        - /path/to/save/crafty-controller/backups:/crafty/backups
+        - /path/to/save/crafty-controller/config:/crafty/app/config
+        - /path/to/save/crafty-controller/logs:/crafty/logs
+        - /path/to/save/crafty-controller/import:/crafty/import
+        - /path/to/save/crafty-controller/servers:/crafty/servers
